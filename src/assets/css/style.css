@@ -1,0 +1,39 @@
+body{
+	height: 100vh;
+	background: linear-gradient(to bottom, black 40%, #fff0), url(./../img/background.png) no-repeat 0 0;
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+/* header start */
+header{
+	padding-top: 5rem;
+
+	background: url(./../img/car.png) no-repeat 80% 0;
+	background-size: 50%;
+}
+#logo{
+	width: 6rem;
+}
+#logo-text-1{
+	font-size: 4rem;
+	font-weight: 300;
+}
+#logo-text-2{
+	font-size: 2rem;
+	font-weight: 100;
+	margin-left: -2rem;
+}
+
+@media (max-width: 576px){
+	#logo{
+		width: 5rem;
+	}
+	#logo-text-1{
+		font-size: 3rem;
+	}
+	#logo-text-2{
+		font-size: 1.4rem;
+	}
+}
+/* header end */

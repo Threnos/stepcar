@@ -1,25 +1,43 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Home from './views/Home.vue'
+import Register from './views/Registration.vue'
+
+// user space
+import UserHome from './views/user/UserHome.vue'
+import UserFaq from './views/user/UserFaq.vue'
+// user space
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      component: Home,
+
+      children: [
+        {
+          path: 'registration',
+          component: Register
+        }
+      ]
     },
+
+    // user space
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: function () {
-        return import(/* webpackChunkName: "about" */ './views/About.vue')
-      }
+      path: '/user/',
+      component: UserHome,
+
+      children: [
+        {
+          path: 'faq',
+          component: UserFaq
+        }
+      ]
     }
+    // user space
   ]
 })

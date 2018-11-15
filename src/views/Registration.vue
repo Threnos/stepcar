@@ -132,10 +132,6 @@
       <div class="form-group w-75 my-5 mx-auto px-4 text-left">
         <p class="h4 font-weight-light text-center">Комфорт</p>
 
-        <div class="form-check">
-          <input class="form-check-input mt-2" type="checkbox" value="" id="payOnline">
-          <label class="form-check-label h4 font-weight-light" for="payOnline">Онлайн</label>
-        </div>
       </div>
 
       <div class="row mt-3">
@@ -149,8 +145,6 @@
     </div>
 <!-- ШАГ-4 -->
   </form>
-
-  <router-link to="/" class="btn btn-primary">Главная</router-link>
 </div>
 </template>
 
