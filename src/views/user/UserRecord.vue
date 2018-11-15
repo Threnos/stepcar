@@ -1,0 +1,14 @@
+<template lang="html">
+  <div class="container">
+    <h1 class="display-1">Record</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'UserRecord'
+}
+</script>
+
+<style lang="css">
+</style>
