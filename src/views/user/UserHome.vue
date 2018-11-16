@@ -12,7 +12,7 @@
       </div>
     </header>
 
-<router-link to="/" class="btn btn-primary">Главная сайта</router-link>
+<router-link to="/registration" class="btn btn-primary">Главная</router-link>
 
     <div id="userMain" class="container">
       <nav id="userNav" class="nav nav-pills nav-fill py-3">

@@ -1,6 +1,7 @@
 <template lang="html">
-  <div class="container">
-    <h1 class="display-1">CABINET</h1>
+  <div class="container py-3">
+    <p class="h3 text-center">Таблица записей</p>
+    <hr class="border-top border-dark w-75 mb-5">
   </div>
 </template>
 

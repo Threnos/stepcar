@@ -12,8 +12,7 @@
       </div>
 
       <div id="nav">
-        <router-link to="/" class="btn btn-primary">Главная</router-link> |
-        <router-link to="/registration" class="btn btn-primary">Регистрация</router-link> |
+        <router-link to="/registration" class="btn btn-primary">Главная</router-link> |
         <router-link to="/user/cabinet" class="btn btn-primary">Личный кабинет</router-link>
       </div>
     </header>

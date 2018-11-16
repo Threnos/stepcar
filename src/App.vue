@@ -10,10 +10,12 @@ export default {
 </script>
 
 <style>
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 body{
   height: 100vh;
-  background: linear-gradient(to bottom, black 40%, #fff0), url(./assets/img/background.png) no-repeat 0 0;
+  background: linear-gradient(to bottom, #000, #fff0), url(./assets/img/background.png) no-repeat 0 0;
   background-size: cover;
   background-attachment: fixed;
+  overflow-x: hidden
 }
 </style>
