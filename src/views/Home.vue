@@ -13,6 +13,7 @@
 
       <div id="nav">
         <router-link to="/registration" class="btn btn-primary">Главная</router-link> |
+        <router-link to="/login" class="btn btn-primary">Авторизация</router-link> |
         <router-link to="/user/cabinet" class="btn btn-primary">Личный кабинет</router-link>
       </div>
     </header>

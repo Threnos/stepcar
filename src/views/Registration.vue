@@ -1,6 +1,6 @@
 <template>
-<div class="registration">
-  <form class="container w-50 mx-auto my-5 py-5 text-black text-center position-relative">
+<div>
+  <form class="container w-50 mx-auto py-5 text-black text-center position-relative">
 
 <!-- РЕГИСТРАЦИЯ -->
     <div id="step1" v-bind:style="{ left: offsetStep + 'px' }" class="w-100 p-4 form-background position-absolute">
@@ -73,12 +73,12 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <p class="h5 font-weight-normal">Добавление услуг</p>
+      <p class="h5 font-weight-normal">Добавление услуг</p>
+      <div class="form-group mb-5" v-for="(item, n) in groupsServices" :key="n">
 
-        <input type="text" class="form-control my-3 mx-auto text-center w-50" placeholder="Название услуги" required>
+        <input type="text" class="form-control my-3 mx-auto text-center w-50" v-model="item.name" placeholder="Название услуги" required v-on:input="addServicesInput(n)">
 
-        <textarea class="form-control my-3 mx-auto text-center w-50" rows="5" placeholder="Описание услуги"></textarea>
+        <textarea class="form-control my-3 mx-auto text-center w-50" rows="3" v-model="item.desc" placeholder="Описание услуги" required></textarea>
 
         <div class="input-froup w-50 mx-auto bg-light">
           <table class="table table-sm">
@@ -90,17 +90,17 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(itemS, n) in groupsServices" :key="n">
+              <tr>
                 <td>
-                  <select v-model="itemS.group">
+                  <select v-model="item.group">
                     <option v-for="(itemI, i) in groupInputs" :key="i">{{ itemI.group }}</option>
                   </select>
                 </td>
                 <td>
-                  <input type="text" class="w-75" v-model="itemS.time" placeholder="мин.">
+                  <input type="text" class="w-75" v-model="item.time" placeholder="мин.">
                 </td>
                 <td>
-                  <input type="text" class="w-75" v-model="itemS.cost" placeholder="руб.">
+                  <input type="text" class="w-75" v-model="item.cost" placeholder="руб.">
                 </td>
               </tr>
             </tbody>
@@ -127,22 +127,18 @@
       <label for="ownerPhone" class="h4 font-weight-light">Номер телефона владельца автомойки</label>
       <input type="text" id="ownerPhone" class="form-control mb-3 mx-auto text-center w-50" v-model="ownerPhone" placeholder="+7(000)-000-00-00" required>
 
-      <label for="averageWashFrom" class="my-4 h4 font-weight-light">Средняя длительность мойки</label>
-      <div class="row w-75 mx-auto">
-        <div class="col">
-          <label for="averageWashFrom" class="d-inline mr-2 h5 font-weight-light">От</label>
-          <input type="text" id="averageWashFrom" class="form-control mb-3 mx-auto text-center d-inline w-75" required>
-        </div>
-        <div class="col">
-          <label for="averageWashTo" class="d-inline mr-2 h5 font-weight-light">До</label>
-          <input type="text" id="averageWashTo" class="form-control mb-3 mx-auto text-center d-inline w-75" required>
-        </div>
-      </div>
+      <label for="averageWash" class="mt-4 h4 font-weight-light">Средняя длительность мойки</label>
+      <input type="text" id="averageWash" class="form-control mb-3 mx-auto text-center w-25" v-model="washTimeFrom" placeholder="мин." required>
 
       <div class="form-group w-75 my-5 mx-auto px-4 text-left">
         <div class="form-check">
-          <input class="form-check-input mt-2" type="checkbox" value="" id="wantSite">
+          <input class="form-check-input mt-2" type="checkbox" v-model="wantSite" id="wantSite">
           <label class="form-check-label h4 font-weight-light" for="wantSite">Хочу личный сайт</label>
+          <div v-if="wantSite == true">
+            <input type="text" v-model="wantSiteAdress">
+            <span class="h5 font-weight-light">.stepcar.ru</span>
+          </div>
+
         </div>
       </div>
 
@@ -204,11 +200,6 @@ export default {
           phone: ''
         }
       ],
-      groupInputs: [
-        {
-          group: ''
-        }
-      ],
       payType: [
         {
           value: '',
@@ -227,7 +218,7 @@ export default {
         }
       ],
 
-      ownerPhone: '',
+      averageWash: '',
 
       comfort: [
         {
@@ -291,6 +282,9 @@ export default {
           text: 'Умывальник'
         }
       ],
+      serviceAdd: [
+
+      ],
       groupInputs: [
         {
           group: ''
@@ -298,13 +292,22 @@ export default {
       ],
       groupsServices: [
         {
+          name: '',
+          desc: '',
           group: '',
           time: '',
           cost: ''
         }
       ],
+      ownerPhone: '',
+      washTimeFrom: '',
+      washTimeTo: '',
+      wantSite: '',
+      wantSiteAdress: '',
+
       nextPhoneInput: 0,
-      nextGroupInput: 0
+      nextGroupInput: 0,
+      nextServiceInput: 0
     }
   },
 
@@ -344,6 +347,24 @@ export default {
         this.groupInputs.splice(n, 1)
         this.nextGroupInput = this.groupInputs.length - 1
       }
+    },
+    addServicesInput: function (n) {
+      if (this.nextServiceInput === n && this.nextServiceInput < this.MAX_SERVICES_GROUPS - 1) {
+        this.groupsServices.push({
+          name: '',
+          desc: '',
+          group: '',
+          time: '',
+          cost: ''
+        })
+        this.nextServiceInput++
+      }
+    },
+    removeServices: function (n) {
+      if (n !== this.nextServiceInput) {
+        this.groupsServices.splice(n, 1)
+        this.nextServiceInput = this.groupsServices.length - 1
+      }
     }
   }
 }
@@ -370,25 +391,6 @@ export default {
   left: 300vw
 }
 
-.hr-divider::before, .hr-divider::after{
-  display: block;
-  content: "";
-  background-color: black;
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 666px;
-  position: absolute;
-  top: -0.4rem
-}
-.hr-divider::before{
-  left: -0.5rem
-}
-.hr-divider::after{
-  right: -0.5rem
-}
-
-.nextButton {}
-
 .prevButton img {
   transform: rotate(180deg)
 }
@@ -397,7 +399,7 @@ export default {
   cursor: pointer
 }
 
-input[type=checkbox] {
+input[type=checkbox], input[type=radio] {
   transform: scale(1.45)
 }
 </style>

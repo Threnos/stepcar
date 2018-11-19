@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Home from './views/Home.vue'
 import Register from './views/Registration.vue'
+import Auth from './views/Auth.vue'
 
 // user space
 import UserHome from './views/user/UserHome.vue'
@@ -14,6 +15,8 @@ import UserClients from './views/user/UserClients.vue'
 import UserContact from './views/user/UserContact.vue'
 import UserFaq from './views/user/UserFaq.vue'
 import UserSettings from './views/user/UserSettings.vue'
+import UserProfile from './views/user/UserProfile.vue'
+import UserLogout from './views/user/UserLogout.vue'
 // user space
 
 Vue.use(Router)
@@ -29,6 +32,10 @@ export default new Router({
         {
           path: 'registration',
           component: Register
+        },
+        {
+          path: 'login',
+          component: Auth
         }
       ]
     },
@@ -70,6 +77,14 @@ export default new Router({
         {
           path: 'settings',
           component: UserSettings
+        },
+        {
+          path: 'profile',
+          component: UserProfile
+        },
+        {
+          path: 'logout',
+          component: UserLogout
         }
       ]
     }
