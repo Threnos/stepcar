@@ -9,7 +9,8 @@
       <p class="h2 text-center mt-4 mb-0">Новая учётная запись</p>
       <hr class="border-top border-dark position-relative hr-divider w-75 mb-5 mt-0">
 
-      <input type="email" v-model="form.accountEmail" class="form-control my-3 mx-auto text-center w-50" placeholder="Email" required>
+      <input type="email" v-validate="'required|email'" v-model="form.accountEmail" name="s1Email" class="form-control my-3 mx-auto text-center w-50" placeholder="Email" required>
+      <span v-show="errors.has('s1Email')" class="">{{ errors.first('s1Email') }}</span>
 
       <input type="phone" v-model="form.accountPhone" class="form-control my-3 mx-auto text-center w-50" placeholder="Телефон" required>
 
