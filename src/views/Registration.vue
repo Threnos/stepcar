@@ -1,42 +1,53 @@
 <template>
-<div>
-  <form class="container w-50 mx-auto py-5 text-black text-center position-relative">
+  <div class="container w-50 mx-auto py-5 text-black text-center position-relative">
 
 <!-- РЕГИСТРАЦИЯ -->
-    <div id="step1" v-bind:style="{ left: offsetStep + 'px' }" class="w-100 p-4 form-background position-absolute">
+    <form id="step1" v-bind:style="{ left: offsetStep + 'px' }" class="w-100 p-4 form-background position-absolute">
       <p class="h1 text-center">РЕГИСТРАЦИЯ</p>
 
       <p class="h2 text-center mt-4 mb-0">Новая учётная запись</p>
       <hr class="border-top border-dark position-relative hr-divider w-75 mb-5 mt-0">
 
-      <input type="email" v-validate="'required|email'" v-model="form.accountEmail" name="s1Email" class="form-control my-3 mx-auto text-center w-50" placeholder="Email" required>
-      <span v-show="errors.has('s1Email')" class="">{{ errors.first('s1Email') }}</span>
+      <div class="form-group mt-3 mb-1 mx-auto w-50">
+        <input type="text" v-model.lazy.trim="$v.accountEmail.$model" class="form-control text-center"
+        :class="{ 'border border-danger': $v.accountEmail.$error }" placeholder="E-mail">
+        <div class="div-err" v-if="$v.accountEmail.$error && $v.accountEmail.email">Заполните поле</div>
+        <div class="div-err" v-if="!$v.accountEmail.email">Введите корректный e-mail</div>
+      </div>
 
-      <input type="phone" v-model="form.accountPhone" class="form-control my-3 mx-auto text-center w-50" placeholder="Телефон" required>
+      <div class="form-group mt-3 mb-1 mx-auto w-50">
+        <input type="tel" v-model.trim="$v.accountPhone.$model" class="form-control text-center"
+        :class="{ 'border border-danger': $v.accountPhone.$error }" v-mask="'+38 (###) ###-####'" placeholder="Телефон">
+        <div class="div-err" v-if="$v.accountPhone.$error">Заполните поле</div>
+      </div>
 
-      <input type="password" v-model="form.accountPass" class="form-control my-3 mx-auto text-center w-50" placeholder="Пароль" required>
+      <div class="form-group mt-3 mb-1 mx-auto w-50">
+        <input type="password" v-model.trim="$v.accountPass.$model" class="form-control text-center"
+        :class="{ 'border border-danger': $v.accountPass.$error }" placeholder="Пароль">
+        <div class="div-err" v-if="$v.accountPass.$error">Заполните поле</div>
+      </div>
 
       <div class="row mt-3">
         <div class="col text-right">
           <button type="submit" class="border-0 bg-transparent nextButton" v-on:click.prevent="nextForm"><span class="h4 text-dark">Далее</span><img src="@/assets/img/icons/transfer.png" class="w-25 ml-2 mb-1" alt=""></button>
         </div>
       </div>
-    </div>
+    </form>
 <!-- РЕГИСТРАЦИЯ -->
 
 <!-- ШАГ-1 -->
-    <div id="step2" v-bind:style="{ left: (clientWidth + offsetStep) + 'px' }" class="w-100 p-4 form-background position-absolute">
+    <form id="step2" v-bind:style="{ left: (clientWidth + offsetStep) + 'px' }" class="w-100 p-4 form-background position-absolute">
       <p class="h2 text-center mt-4 mb-0">Шаг 1/3: Основные данные</p>
       <hr class="border-top border-dark position-relative hr-divider w-75 mb-5 mt-0">
 
-      <input type="text" v-model="form.washName" class="form-control my-3 mx-auto text-center w-50" placeholder="Название мойки" required>
+      <input type="text" v-model="washName" class="form-control my-3 mx-auto text-center w-50" placeholder="Название мойки">
 
-      <input type="text" v-model="form.washAdress" class="form-control my-3 mx-auto text-center w-50" placeholder="Адрес" required>
+      <input type="text" v-model="washAdress" class="form-control my-3 mx-auto text-center w-50" placeholder="Адрес">
 
       <div class="input-group w-50 mx-auto mb-3">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" id="inputGroupFile01">
-          <label class="custom-file-label" for="inputGroupFile01">Выбрать фото</label>
+          <input type="file" class="custom-file-input" id="inputFile">
+          <label class="custom-file-label text-left" for="inputFile">Выбрать фото</label>
         </div>
       </div>
 
@@ -45,9 +56,9 @@
         <i class="material-icons my-3 removePhone" v-on:click="removePhone(n)">close</i>
       </div>
 
-      <input type="text" v-model="form.washSite" class="form-control my-3 mx-auto text-center w-50" placeholder="Ссылка на соцсети">
+      <input type="text" v-model="washSite" class="form-control my-3 mx-auto text-center w-50" placeholder="Ссылка на соцсети">
 
-      <input type="date" v-model="form.washDate">
+      <input type="date" v-model="washDate">
 
       <div class="row mt-3">
         <div class="col text-left">
@@ -57,7 +68,7 @@
           <button type="submit" class="border-0 bg-transparent nextButton" v-on:click.prevent="nextForm"><span class="h4 text-dark">Далее</span><img src="@/assets/img/icons/transfer.png" class="w-25 ml-2 mb-1" alt=""></button>
         </div>
       </div>
-    </div>
+    </form>
 <!-- ШАГ-1 -->
 
 <!-- ШАГ-2 -->
@@ -77,9 +88,9 @@
       <p class="h5 font-weight-normal">Добавление услуг</p>
       <div class="form-group mb-5" v-for="(item, n) in groupsServices" :key="n">
 
-        <input type="text" class="form-control my-3 mx-auto text-center w-50" v-model="item.name" placeholder="Название услуги" required v-on:input="addServicesInput(n)">
+        <input type="text" class="form-control my-3 mx-auto text-center w-50" v-model="item.name" placeholder="Название услуги" v-on:input="addServicesInput(n)">
 
-        <textarea class="form-control my-3 mx-auto text-center w-50" rows="3" v-model="item.desc" placeholder="Описание услуги" required></textarea>
+        <textarea class="form-control my-3 mx-auto text-center w-50" rows="3" v-model="item.desc" placeholder="Описание услуги"></textarea>
 
         <div class="input-froup w-50 mx-auto bg-light">
           <table class="table table-sm">
@@ -125,16 +136,23 @@
       <p class="h2 text-center mt-4 mb-0">Шаг 3/3: Прочее</p>
       <hr class="border-top border-dark position-relative hr-divider w-75 mb-5 mt-0">
 
-      <label for="ownerPhone" class="h4 font-weight-light">Номер телефона владельца автомойки</label>
-      <input type="text" id="ownerPhone" class="form-control mb-3 mx-auto text-center w-50" v-model="ownerPhone" placeholder="+7(000)-000-00-00" required>
+      <label class="h4 font-weight-light">
+        Номер телефона владельца автомойки
+        <input type="text" class="form-control mt-2 mx-auto text-center w-50" v-model="ownerPhone" placeholder="+7(000)-000-00-00">
+      </label>
 
-      <label for="averageWash" class="mt-4 h4 font-weight-light">Средняя длительность мойки</label>
-      <input type="text" id="averageWash" class="form-control mb-3 mx-auto text-center w-25" v-model="washTimeFrom" placeholder="мин." required>
+      <label class="mt-4 h4 font-weight-light">
+        Средняя длительность мойки
+        <input type="text" class="form-control mt-2 mx-auto text-center w-25" v-model="washTimeFrom" placeholder="мин.">
+      </label>
 
       <div class="form-group w-75 my-5 mx-auto px-4 text-left">
         <div class="form-check">
-          <input class="form-check-input mt-2" type="checkbox" v-model="wantSite" id="wantSite">
-          <label class="form-check-label h4 font-weight-light" for="wantSite">Хочу личный сайт</label>
+          <label class="form-check-label h4 font-weight-light">
+            <input class="form-check-input mt-2" type="checkbox" v-model="wantSite">
+            Хочу личный сайт
+          </label>
+
           <div v-if="wantSite == true">
             <input type="text" v-model="wantSiteAdress">
             <span class="h5 font-weight-light">.stepcar.ru</span>
@@ -147,8 +165,11 @@
         <p class="h4 font-weight-light text-center">Тип оплаты</p>
 
         <div class="form-check" v-for="(item, n) in payType" :key="n">
-          <input class="form-check-input mt-2" type="checkbox" v-model="item.value" v-bind:id="item.label">
-          <label class="form-check-label h4 font-weight-light" v-bind:for="item.label">{{ item.text }}</label>
+
+          <label class="form-check-label h4 font-weight-light">
+            <input class="form-check-input mt-2" type="checkbox" v-model="item.value">
+            {{ item.text }}
+          </label>
         </div>
       </div>
 
@@ -156,8 +177,11 @@
         <p class="h4 font-weight-light text-center">Комфорт</p>
 
         <div class="form-check" v-for="(item, n) in comfort" :key="n">
-          <input class="form-check-input mt-2" type="checkbox" v-model="item.value" v-bind:id="item.label">
-          <label class="form-check-label h4 font-weight-light" v-bind:for="item.label">{{ item.text }}</label>
+
+          <label class="form-check-label h4 font-weight-light">
+            <input class="form-check-input mt-2" type="checkbox" v-model="item.value">
+            {{ item.text }}
+          </label>
         </div>
       </div>
 
@@ -171,50 +195,46 @@
       </div>
     </div>
 <!-- ШАГ-3 -->
-  </form>
 </div>
 </template>
 
 <script>
 import { CONST } from './../components/const'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
-  name: 'registration',
   mixins: [CONST],
+
+  validations: {
+    accountEmail: { required, email },
+    accountPhone: { required },
+    accountPass: { required }
+  },
 
   data () {
     return {
-      clientWidth: document.body.clientWidth,
-      offsetStep: 0,
-      form: {
-        accountEmail: '',
-        accountPhone: '',
-        accountPass: '',
-        washName: '',
-        washAdress: '',
-        washPhoto: '',
-        washPhone: '',
-        washDate: ''
-      },
-      phoneInputs: [
-        {
-          phone: ''
-        }
-      ],
+      accountEmail: '',
+      accountPhone: '',
+      accountPass: '',
+      washName: '',
+      washAdress: '',
+      washPhoto: '',
+      washPhone: '',
+      washDate: '',
+      washSite: '',
+
+      phoneInputs: [ { phone: '' } ],
       payType: [
         {
-          value: '',
-          label: 'payCash',
+          value: false,
           text: 'Наличный'
         },
         {
-          value: '',
-          label: 'payCashless',
+          value: false,
           text: 'Безналичный'
         },
         {
-          value: '',
-          label: 'payOnline',
+          value: false,
           text: 'Онлайн'
         }
       ],
@@ -223,74 +243,58 @@ export default {
 
       comfort: [
         {
-          value: '',
-          label: 'comfortWifi',
+          value: false,
           text: 'Wi-Fi'
         },
         {
-          value: '',
-          label: 'comfortRestZone',
+          value: false,
           text: 'Зона отдыха'
         },
         {
-          value: '',
-          label: 'comfortConditioner',
+          value: false,
           text: 'Кондиционер'
         },
         {
-          value: '',
-          label: 'comfortCoffee',
+          value: false,
           text: 'Кофе'
         },
         {
-          value: '',
-          label: 'comfortWater',
+          value: false,
           text: 'Вода'
         },
         {
-          value: '',
-          label: 'comfortTv',
+          value: false,
           text: 'Телефизор'
         },
         {
-          value: '',
-          label: 'comfortCafe',
+          value: false,
           text: 'Кафе'
         },
         {
-          value: '',
-          label: 'comfortAtm',
+          value: false,
           text: 'Банкомат'
         },
         {
-          value: '',
-          label: 'comfortStore',
+          value: false,
           text: 'Магазин'
         },
         {
-          value: '',
-          label: 'comfortCctv',
+          value: false,
           text: 'Видеонаблюдение'
         },
         {
-          value: '',
-          label: 'comfortWc',
+          value: false,
           text: 'Туалет'
         },
         {
-          value: '',
-          label: 'comfortWashstand',
+          value: false,
           text: 'Умывальник'
         }
       ],
       serviceAdd: [
 
       ],
-      groupInputs: [
-        {
-          group: ''
-        }
-      ],
+      groupInputs: [ { group: '' } ],
       groupsServices: [
         {
           name: '',
@@ -303,25 +307,30 @@ export default {
       ownerPhone: '',
       washTimeFrom: '',
       washTimeTo: '',
-      wantSite: '',
+      wantSite: false,
       wantSiteAdress: '',
+
+      clientWidth: document.body.clientWidth,
+      offsetStep: 0,
 
       nextPhoneInput: 0,
       nextGroupInput: 0,
       nextServiceInput: 0
     }
   },
-
   methods: {
-    nextForm: function () {
-      this.offsetStep -= this.clientWidth
-      return this.offsetStep
+    nextForm () {
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        this.offsetStep -= this.clientWidth
+        return this.offsetStep
+      }
     },
-    prevForm: function () {
+    prevForm () {
       this.offsetStep += this.clientWidth
       return this.offsetStep
     },
-    addPhoneInput: function (n) {
+    addPhoneInput (n) {
       if (this.nextPhoneInput === n && this.nextPhoneInput < this.MAX_WASH_PHONES - 1) {
         this.phoneInputs.push({
           phone: ''
@@ -329,13 +338,13 @@ export default {
         this.nextPhoneInput++
       }
     },
-    removePhone: function (n) {
+    removePhone (n) {
       if (n !== this.nextPhoneInput) {
         this.phoneInputs.splice(n, 1)
         this.nextPhoneInput = this.phoneInputs.length - 1
       }
     },
-    addGroupInput: function (n) {
+    addGroupInput (n) {
       if (this.nextGroupInput === n && this.nextGroupInput < this.MAX_VEHICLE_GROUPS - 1) {
         this.groupInputs.push({
           group: ''
@@ -343,13 +352,13 @@ export default {
         this.nextGroupInput++
       }
     },
-    removeGroup: function (n) {
+    removeGroup (n) {
       if (n !== this.nextGroupInput) {
         this.groupInputs.splice(n, 1)
         this.nextGroupInput = this.groupInputs.length - 1
       }
     },
-    addServicesInput: function (n) {
+    addServicesInput (n) {
       if (this.nextServiceInput === n && this.nextServiceInput < this.MAX_SERVICES_GROUPS - 1) {
         this.groupsServices.push({
           name: '',
@@ -361,7 +370,7 @@ export default {
         this.nextServiceInput++
       }
     },
-    removeServices: function (n) {
+    removeServices (n) {
       if (n !== this.nextServiceInput) {
         this.groupsServices.splice(n, 1)
         this.nextServiceInput = this.groupsServices.length - 1

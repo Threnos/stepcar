@@ -36,10 +36,19 @@ body{
 .hr-divider::after{
   right: -0.5rem
 }
+
 .bg-2light{
   background: linear-gradient(to bottom, #b7b7b7, rgba(183, 183, 183, 0.5)) no-repeat 0 0
 }
 .bg-3lighter{
-  background-color: #d6d6d6
+  background-color: rgba(214, 214, 214, 0.5)
+}
+
+.div-err{
+  background-color: rgba(214, 214, 214, 0.5);
+  color: #dc3545;
+  border-radius: .25rem;
+  padding: .25rem;
+  margin-top: .25rem
 }
 </style>

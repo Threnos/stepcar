@@ -1,24 +1,18 @@
 import Vue from 'vue'
+import Vuelidate from 'vuelidate'
+import VueTheMask from 'vue-the-mask'
 import App from './App.vue'
 import router from './router'
-import VeeValidate from 'vee-validate'
 import 'bootstrap'
-
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const dict = {
-  custom: {
-    s1Email: {
-      required: 'Your email is empty'
-    }
-  }
-}
-VeeValidate.Validator.updateDictionary(dict);
-Vue.use(VeeValidate)
+Vue.use(Vuelidate)
+Vue.use(VueTheMask)
 
 Vue.config.productionTip = false
 
 new Vue({
+  validations: {},
   router,
   render: function (h) { return h(App) }
 }).$mount('#app')
