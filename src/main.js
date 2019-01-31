@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import Vuelidate from 'vuelidate'
-import VueTheMask from 'vue-the-mask'
+import Vuelidate from 'vuelidate' // модуль валидации полей ввода
+import VueTheMask from 'vue-the-mask' // маска ввода для полей
 import App from './App.vue'
-import router from './router'
+import router from './router' // вью роутер
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 

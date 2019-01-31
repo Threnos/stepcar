@@ -21,7 +21,7 @@
       <div class="row mt-3">
         <div class="col text-right">
           <button type="submit" class="border-0 bg-transparent nextButton"><span class="h4 text-dark">Далее</span><img src="@/assets/img/icons/transfer.png" class="w-25 ml-2 mb-1" alt=""></button>
-          <div class="div-err" v-show="$v.$error" style="display:none">Проверьте правильность заполнения формы</div>
+          <br><div class="div-err" v-show="$v.$error" style="display:none">Проверьте правильность заполнения формы</div>
         </div>
       </div>
     </form>

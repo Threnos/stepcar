@@ -1,5 +1,5 @@
 <template>
-  <div class="container w-50 mx-auto py-5 text-black text-center position-relative">
+  <div class="container w-50 mx-auto text-black text-center position-relative">
 
 <!-- РЕГИСТРАЦИЯ -->
     <form id="step1" v-bind:style="{ left: offsetStep + 'px' }" class="w-100 p-4 form-background position-absolute">

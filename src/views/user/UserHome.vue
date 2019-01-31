@@ -40,7 +40,18 @@
           </div>
         </li>
       </nav>
+<button
+      type="button"
+      class="btn"
+      @click="showModal"
+    >
+      Open Modal!
+    </button>
 
+    <modal
+      v-show="isModalVisible"
+      @close="closeModal"
+    />
       <router-view></router-view>
     </div>
 
@@ -48,8 +59,25 @@
 </template>
 
 <script>
-export default {
+import modal from './../../components/modal.vue'
 
+export default {
+  components: {
+    modal
+  },
+  data () {
+    return {
+      isModalVisible: false
+    }
+  },
+  methods: {
+    showModal () {
+      this.isModalVisible = true
+    },
+    closeModal () {
+      this.isModalVisible = false
+    }
+  }
 }
 </script>
 

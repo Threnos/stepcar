@@ -41,10 +41,11 @@ body{
   background: linear-gradient(to bottom, #b7b7b7, rgba(183, 183, 183, 0.5)) no-repeat 0 0
 }
 .bg-3lighter{
-  background-color: rgba(214, 214, 214, 0.5)
+  background-color: rgba(214, 214, 214, 0.75)
 }
 
 .div-err{
+  display: inline-block;
   background-color: rgba(214, 214, 214, 0.5);
   color: #dc3545;
   border-radius: .25rem;
